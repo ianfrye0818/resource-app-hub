@@ -1,6 +1,7 @@
 import mammoth from 'mammoth';
 import pdfParse from 'pdf-parse';
 import { parseResumeToJson } from './parse-resume-to-json';
+import { ErrorMessages } from './data';
 
 export async function collectResumeText(buffer: Buffer, fileName: string) {
   let data: string;
@@ -11,7 +12,7 @@ export async function collectResumeText(buffer: Buffer, fileName: string) {
     const parsed = await pdfParse(buffer);
     data = parsed.text;
   } else {
-    throw new Error('Unsupported file type');
+    throw new Error(ErrorMessages.invalid);
   }
 
   return parseResumeToJson(data);

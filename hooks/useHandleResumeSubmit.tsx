@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { isError as errorIsError } from '@/lib/utils';
 import axios, { isAxiosError } from 'axios';
+import { ErrorMessages } from '@/lib/data';
 
 export default function useHandleResumeSubmit() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,7 @@ export default function useHandleResumeSubmit() {
 
     try {
       if (!file) {
-        throw new Error('No file provided');
+        throw new Error(ErrorMessages.NoFile);
       }
       const formData = new FormData();
       formData.append('file', file);
@@ -44,10 +45,15 @@ export default function useHandleResumeSubmit() {
       return url;
     } catch (error) {
       console.error(error);
-      if (isAxiosError(error) && error.response?.status === 400) {
-        setError('Invalid Resume or Filetype');
+      if (isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          setError(ErrorMessages.invalid);
+        }
+        if (error.response?.status === 429) {
+          setError(ErrorMessages.RateLimit);
+        }
       } else {
-        setError('An error occurred');
+        setError(ErrorMessages.Unknown);
       }
     } finally {
       setLoading(false);

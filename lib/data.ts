@@ -23,3 +23,16 @@ Please clean up any grammatical errors and ensure that the resume and summary so
 ${cleanedDocument}
 `;
 };
+
+export const MAX_REQUESTS_PER_MIN = 10;
+export const MAX_REQUESTS_PER_DAY = 1000;
+
+export const ErrorMessages = {
+  DailyRateLimit: 'Daily rate limit exceeded',
+  NotResume: 'Not a resume!',
+  RateLimit: 'Rate limit exceeded',
+  MinuteRateLimit: 'Rate limit exceeded',
+  Unknown: 'An unknown error occurred',
+  invalid: 'Invalid Resume or Filetype',
+  NoFile: 'No file provided',
+};

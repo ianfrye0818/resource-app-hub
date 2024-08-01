@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { ErrorMessages } from './data';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,7 +14,7 @@ export function checkIfValidresume(parsedJson: any) {
     !parsedJson.education ||
     !parsedJson.workHistory
   ) {
-    throw new Error('Not a resume!');
+    throw new Error(ErrorMessages.NotResume);
   }
 }
 
