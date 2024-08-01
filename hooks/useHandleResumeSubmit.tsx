@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { isError as errorIsError } from '@/lib/utils';
-import axios, { isAxiosError } from 'axios';
 import { ErrorMessages } from '@/lib/data';
+import { isError } from '@/lib/utils';
 
 export default function useHandleResumeSubmit() {
   const [loading, setLoading] = useState(false);
@@ -20,18 +19,21 @@ export default function useHandleResumeSubmit() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/resume-parse`,
-        formData,
-        {
-          responseType: 'blob',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/resume-parse`, {
+        method: 'POST',
+        body: formData,
+      });
 
-      const blob = new Blob([response.data], { type: response.headers['content-type'] });
+      if (response.status === 400) {
+        throw new Error(ErrorMessages.invalid);
+      }
+
+      if (response.status === 429) {
+        throw new Error(ErrorMessages.RateLimit);
+      }
+
+      const blob = await response.blob();
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.style.display = 'none';
@@ -45,16 +47,7 @@ export default function useHandleResumeSubmit() {
       return url;
     } catch (error) {
       console.error(error);
-      if (isAxiosError(error)) {
-        if (error.response?.status === 400) {
-          setError(ErrorMessages.invalid);
-        }
-        if (error.response?.status === 429) {
-          setError(ErrorMessages.RateLimit);
-        }
-      } else {
-        setError(ErrorMessages.Unknown);
-      }
+      setError(isError(error) ? error.message : ErrorMessages.Unknown);
     } finally {
       setLoading(false);
     }
