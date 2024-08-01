@@ -24,18 +24,14 @@ export async function POST(req: NextRequest) {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
-    if (isError(error) && error.message === 'not a resume') {
-      return NextResponse.json({ error: 'Not a resume' }, { status: 400 });
-    }
-    if (isError(error) && error.message === 'Unsupported file type') {
-      return NextResponse.json({ error: 'Unsupported file type' }, { status: 400 });
+    console.error(['resume-parser POST error'], error);
+    if (isError(error) && error.message.toLowerCase().includes('not a resume')) {
+      return NextResponse.json({ error: 'Not a resume!' }, { status: 400 });
     }
     return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
   }
 }
 
 export async function GET() {
-  console.log('GET request');
   return NextResponse.json({ message: 'Hello, world!' });
 }

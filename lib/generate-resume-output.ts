@@ -4,7 +4,6 @@ import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 
 export async function generateResume(documentData: any) {
-  console.log({ presentDirectory: process.cwd() });
   const content = fs.readFileSync(process.cwd() + '/input.docx', 'binary');
   const zip = new PizZip(content);
 
