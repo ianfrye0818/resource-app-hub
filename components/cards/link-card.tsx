@@ -9,14 +9,19 @@ const LinkCard = ({
   iconSize = 60,
   iconWidth = 60,
   href,
+  newWindow = false,
+  iconColor = 'black',
 }: LinkCardProps) => {
   return (
-    <Link href={href}>
+    <Link
+      href={href}
+      target={newWindow ? '_blank' : '_self'}
+    >
       <Card className='w-max flex flex-col gap-4 items-center p-6 hover:bg-gray-50 cursor-pointer'>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
         <CardContent className='flex flex-col gap-4 items-center'>
-          <LinkIcon style={{ width: iconWidth, height: iconSize }} />
+          <LinkIcon style={{ width: iconWidth, height: iconSize, color: iconColor }} />
         </CardContent>
       </Card>
     </Link>

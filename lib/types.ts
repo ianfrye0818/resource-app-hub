@@ -5,4 +5,6 @@ export interface LinkCardProps {
   iconSize?: number;
   iconWidth?: number;
   href: string;
+  newWindow?: boolean;
+  iconColor?: string;
 }

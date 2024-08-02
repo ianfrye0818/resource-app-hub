@@ -7,8 +7,8 @@ export default function HomePage() {
 
 function Page() {
   return (
-    <section className='container mx-auto'>
-      <div className='mt-[96px] flex gap-4 flex-wrap'>
+    <section className='container mx-auto pt-8'>
+      <div className='flex gap-4 flex-wrap'>
         {LinkCardItems.map((item, index) => (
           <LinkCard
             key={index}

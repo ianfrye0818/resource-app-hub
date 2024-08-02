@@ -1,5 +1,8 @@
 import { IoScan } from 'react-icons/io5';
 import { FcDocument } from 'react-icons/fc';
+import { MdOutlineCelebration } from 'react-icons/md';
+import { GiVote } from 'react-icons/gi';
+import { IoQrCode } from 'react-icons/io5';
 
 import { LinkCardProps } from './types';
 
@@ -51,8 +54,25 @@ export const LinkCardItems: LinkCardProps[] = [
   },
   {
     title: 'QR Code Generator',
-    linkIcon: IoScan,
+    linkIcon: IoQrCode,
+    iconColor: '#ff0066bb',
     description: 'App for generating QR codes',
     href: '/qr-generator',
+  },
+  {
+    title: 'Praise Pal',
+    linkIcon: MdOutlineCelebration,
+    description: 'App for sharing kudos with co-workers',
+    href: 'https://www.praise-pal.com',
+    newWindow: true,
+    iconColor: '#ff9900',
+  },
+  {
+    title: 'Pulse Vote',
+    linkIcon: GiVote,
+    description: 'App for real-time voting',
+    href: 'https://www.pulse-vote.com',
+    newWindow: true,
+    iconColor: '#0066ff',
   },
 ];
