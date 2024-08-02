@@ -9,7 +9,7 @@ const QRGeneratorPage = () => {
   const router = useRouter();
   const [qrCodeValue, setQrCodeValue] = useState('');
   return (
-    <div className='w-full h-dvh flex flex-col gap-6 items-center justify-center'>
+    <div className='w-full h-full flex flex-col gap-6 items-center justify-center'>
       <h1 className='text-2xl font-bold'>Enter Link Below to Generate QR Code</h1>
       <form
         className='flex flex-col gap-3 w-full max-w-[450px]'

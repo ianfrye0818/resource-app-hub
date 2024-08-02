@@ -26,7 +26,7 @@ const QRResult = ({ searchParams }: QRResultProps) => {
     }
   };
   return (
-    <div className='h-dvh w-full flex flex-col justify-center items-center gap-4'>
+    <div className='h-full w-full flex flex-col justify-center items-center gap-4'>
       <div ref={qrCoderef}>
         <QRCode
           value={qrCodeValue}

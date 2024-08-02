@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className='h-dvh'>
           <Header />
-          {children}
+          <div className='w-full h-[calc(100dvh-96px)]'>{children}</div>
         </main>
       </body>
       <Analytics />
