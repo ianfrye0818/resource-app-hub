@@ -1,3 +1,8 @@
+import { IoScan } from 'react-icons/io5';
+import { FcDocument } from 'react-icons/fc';
+
+import { LinkCardProps } from './types';
+
 export const getPrompt = (cleanedDocument: string) => {
   return `
 does the document below look like it's a resume, if not - please return only the text 'not a resume';
@@ -36,3 +41,18 @@ export const ErrorMessages = {
   invalid: 'Invalid Resume or Filetype',
   NoFile: 'No file provided',
 };
+
+export const LinkCardItems: LinkCardProps[] = [
+  {
+    title: 'AI Resume Formatter',
+    linkIcon: FcDocument,
+    description: 'App for formatting resumes to TR format',
+    href: '/resume-parser',
+  },
+  {
+    title: 'QR Code Generator',
+    linkIcon: IoScan,
+    description: 'App for generating QR codes',
+    href: '/qr-generator',
+  },
+];

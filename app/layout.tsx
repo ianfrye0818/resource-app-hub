@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
+import Header from '@/components/pages-and-sections/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'The Resource - Resume Template Generator',
-  description:
-    'An app that uses the power of AI to generate an uploaded resume onto a predefined template',
+  title: 'The Resource Apps',
+  description: 'Apps specifically designed for The Resource Staffing Company by Ian Frye',
 };
 
 export default function RootLayout({
@@ -18,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <main className='h-dvh'>
+          <Header />
+          {children}
+        </main>
+      </body>
       <Analytics />
     </html>
   );
