@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import QRCode from 'react-qr-code';
 import html2canvvas from 'html2canvas';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 interface QRResultProps {
   searchParams: { qrCodeValue: string };
@@ -10,6 +11,7 @@ interface QRResultProps {
 
 const QRResult = ({ searchParams }: QRResultProps) => {
   const { qrCodeValue } = searchParams;
+  const router = useRouter();
 
   const qrCoderef = useRef<HTMLDivElement | null>(null);
 
@@ -35,7 +37,12 @@ const QRResult = ({ searchParams }: QRResultProps) => {
       </div>
       <p>{qrCodeValue}</p>
       <div className='space-x-4'>
-        <Button variant={'outline'}>Go back</Button>
+        <Button
+          variant={'outline'}
+          onClick={() => router.back()}
+        >
+          Go back
+        </Button>
         <Button onClick={handleCopy}>Download Code</Button>
       </div>
     </div>
