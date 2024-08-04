@@ -24,7 +24,9 @@ const acceptedFileTypes = {
 
 export default function DropZoneComponent() {
   const { error, loading, mutate: uploadResume } = useHandleResumeSubmit();
-  const [type, setType] = useState<Models>(Models.GEMINI);
+  const [type, setType] = useState<Models>(
+    (localStorage.getItem('model') as Models) || Models.GEMINI
+  );
 
   const handleChange = async (acceptedFile: File) => {
     try {
@@ -50,7 +52,11 @@ export default function DropZoneComponent() {
         return (
           <div>
             <div className='flex gap-2 items-center mb-3 justify-center'>
-              Model: <AIModelSelect setType={setType} />
+              Model:{' '}
+              <AIModelSelect
+                setType={setType}
+                type={type}
+              />
             </div>
             <Card
               {...getRootProps()}
@@ -78,17 +84,21 @@ export default function DropZoneComponent() {
 
 interface AIModelSelectProps {
   setType: React.Dispatch<React.SetStateAction<Models>>;
+  type: Models;
 }
 
-function AIModelSelect({ setType }: AIModelSelectProps) {
+function AIModelSelect({ setType, type }: AIModelSelectProps) {
   const modelOptions = Object.values(Models).map((model) => ({
     value: model,
     label: capitalizeFirstLetter(model),
   }));
   return (
     <Select
-      onValueChange={(value) => setType(value as Models)}
-      defaultValue={Models.GEMINI}
+      onValueChange={(value) => {
+        setType(value as Models);
+        localStorage.setItem('model', value as Models);
+      }}
+      defaultValue={type}
     >
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Model Type' />
