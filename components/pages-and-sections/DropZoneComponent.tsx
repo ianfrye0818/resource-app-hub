@@ -4,7 +4,6 @@ import { UploadIcon } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 import useHandleResumeSubmit from '@/hooks/useHandleResumeSubmit';
 import DataLoader from '@/components/ui/data-loader';
-import { useState } from 'react';
 import { Models } from '@/lib/types';
 import {
   Select,
@@ -13,8 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { capitalizeFirstLetter } from '@/lib/utils';
 import { ModelList } from '@/lib/data';
+
+import useLocalstorageState from '@/hooks/useLocalStroage';
 
 const acceptedFileTypes = {
   'application/msword': ['.doc'],
@@ -24,9 +24,7 @@ const acceptedFileTypes = {
 
 export default function DropZoneComponent() {
   const { error, loading, mutate: uploadResume } = useHandleResumeSubmit();
-  const [type, setType] = useState<Models>(
-    (localStorage.getItem('model') as Models) || Models.GEMINI
-  );
+  const [type, setType] = useLocalstorageState<Models>('model', Models.GEMINI);
 
   const handleChange = async (acceptedFile: File) => {
     try {
@@ -83,25 +81,20 @@ export default function DropZoneComponent() {
 }
 
 interface AIModelSelectProps {
-  setType: React.Dispatch<React.SetStateAction<Models>>;
+  setType: (value: Models) => void;
   type: Models;
 }
 
 function AIModelSelect({ setType, type }: AIModelSelectProps) {
-  const modelOptions = Object.values(Models).map((model) => ({
-    value: model,
-    label: capitalizeFirstLetter(model),
-  }));
   return (
     <Select
-      onValueChange={(value) => {
-        setType(value as Models);
-        localStorage.setItem('model', value as Models);
+      value={type}
+      onValueChange={(value: Models) => {
+        setType(value);
       }}
-      defaultValue={type}
     >
       <SelectTrigger className='w-[180px]'>
-        <SelectValue placeholder='Model Type' />
+        <SelectValue defaultValue={type} />
       </SelectTrigger>
       <SelectContent>
         {ModelList.map((model) => (

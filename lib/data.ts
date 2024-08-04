@@ -83,11 +83,11 @@ export const ModelList: AIModelSelect[] = [
     value: Models.GEMINI,
   },
   {
-    label: 'Claude',
-    value: Models.CLAUDE,
-  },
-  {
     label: 'ChatGPT',
     value: Models.CHATGPT,
+  },
+  {
+    label: 'Claude',
+    value: Models.CLAUDE,
   },
 ];

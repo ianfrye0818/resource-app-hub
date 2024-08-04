@@ -56,8 +56,7 @@ export class OpenAI4O implements AIModel {
   }
 }
 
-export function getAIModel(type: Models = Models.GEMINI) {
-  // return type === Models.GEMINI ? new GoogleGeminiAi() : new ClaudeAISonnet();
+export function getAIModel(type: Models = Models.GEMINI): AIModel {
   switch (type) {
     case Models.GEMINI:
       return new GoogleGeminiAi();
