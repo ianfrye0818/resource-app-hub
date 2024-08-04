@@ -18,7 +18,6 @@ if it is a resume, can you please parse it into a json object with the following
       education: { school: string; degree: string }[];
       workHistory: {
         company: string;
-        location: string;
         startDate: string;
         endDate: string;
         title: string;
@@ -43,6 +42,7 @@ export const ErrorMessages = {
   Unknown: 'An unknown error occurred',
   invalid: 'Invalid Resume or Filetype',
   NoFile: 'No file provided',
+  InvalidModel: 'Invalid AI Model Type',
 };
 
 export const LinkCardItems: LinkCardProps[] = [

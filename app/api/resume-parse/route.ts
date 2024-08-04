@@ -1,24 +1,35 @@
+import { AIModel, ClaudeAISonnet, getAIModel, GoogleGeminiAi } from '@/lib/ai-model';
 import { collectResumeText } from '@/lib/collect-resume-text';
 import { ErrorMessages } from '@/lib/data';
+import { isError } from '@/lib/errors';
 import { generateResume } from '@/lib/generate-resume-output';
 import { rateLimit } from '@/lib/rate-limit';
-import { isError } from '@/lib/utils';
+import { Models } from '@/lib/types';
+
 import { NextRequest, NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
+  const url = new URL(req.url);
+  const type = url.searchParams.get('type');
 
+  if (Object.values(Models).indexOf(type as Models) === -1) {
+    return NextResponse.json({ error: ErrorMessages.InvalidModel }, { status: 400 });
+  }
+  const AiModel = getAIModel(type as Models);
   const file = formData.get('file') as File;
 
   if (!file) {
     return NextResponse.json({ error: ErrorMessages.NoFile }, { status: 400 });
   }
-
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = file.name.replaceAll(' ', '_');
-    const resumeData = await collectResumeText(buffer, fileName);
-    const formattedResume = await rateLimit(() => generateResume(resumeData))();
+    const resumeData = await rateLimit(
+      async () => await collectResumeText(buffer, fileName, AiModel)
+    )();
+    const formattedResume = await generateResume(resumeData);
     return new Response(formattedResume, {
       headers: {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',

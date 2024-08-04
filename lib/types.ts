@@ -8,3 +8,9 @@ export interface LinkCardProps {
   newWindow?: boolean;
   iconColor?: string;
 }
+
+export enum Models {
+  GEMINI = 'gemini',
+  CLAUDE = 'claude',
+  // OPENAI = 'openai',
+}

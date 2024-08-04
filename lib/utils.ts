@@ -28,9 +28,12 @@ export function getFormattedDate() {
 }
 
 export function cleanJsonString(jsonString: string) {
-  return jsonString.replace(/```json|```/g, '').replace(/undefined|null/g, '""');
+  return jsonString.replace(/```json|```/g, '');
 }
 
-export function isError(error: any) {
-  return error instanceof Error;
+export function capitalizeFirstLetter(str: string) {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
