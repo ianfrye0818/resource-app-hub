@@ -12,5 +12,10 @@ export interface LinkCardProps {
 export enum Models {
   GEMINI = 'gemini',
   CLAUDE = 'claude',
-  // OPENAI = 'openai',
+  CHATGPT = 'chatgpt',
+}
+
+export interface AIModelSelect {
+  label: string;
+  value: Models;
 }

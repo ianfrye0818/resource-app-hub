@@ -1,4 +1,4 @@
-import { AIModel, ClaudeAISonnet, getAIModel, GoogleGeminiAi } from '@/lib/ai-model';
+import { getAIModel } from '@/lib/ai-model';
 import { collectResumeText } from '@/lib/collect-resume-text';
 import { ErrorMessages } from '@/lib/data';
 import { isError } from '@/lib/errors';

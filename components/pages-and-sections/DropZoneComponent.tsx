@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { capitalizeFirstLetter } from '@/lib/utils';
+import { ModelList } from '@/lib/data';
 
 const acceptedFileTypes = {
   'application/msword': ['.doc'],
@@ -93,12 +94,12 @@ function AIModelSelect({ setType }: AIModelSelectProps) {
         <SelectValue placeholder='Model Type' />
       </SelectTrigger>
       <SelectContent>
-        {modelOptions.map((option) => (
+        {ModelList.map((model) => (
           <SelectItem
-            key={option.value}
-            value={option.value}
+            key={model.value}
+            value={model.value}
           >
-            {option.label}
+            {model.label}
           </SelectItem>
         ))}
       </SelectContent>

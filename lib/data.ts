@@ -4,7 +4,7 @@ import { MdOutlineCelebration } from 'react-icons/md';
 import { GiVote } from 'react-icons/gi';
 import { IoQrCode } from 'react-icons/io5';
 
-import { LinkCardProps } from './types';
+import { AIModelSelect, LinkCardProps, Models } from './types';
 
 export const getPrompt = (cleanedDocument: string) => {
   return `
@@ -74,5 +74,20 @@ export const LinkCardItems: LinkCardProps[] = [
     href: 'https://www.pulse-vote.com',
     newWindow: true,
     iconColor: '#0066ff',
+  },
+];
+
+export const ModelList: AIModelSelect[] = [
+  {
+    label: 'Gemini',
+    value: Models.GEMINI,
+  },
+  {
+    label: 'Claude',
+    value: Models.CLAUDE,
+  },
+  {
+    label: 'ChatGPT',
+    value: Models.CHATGPT,
   },
 ];

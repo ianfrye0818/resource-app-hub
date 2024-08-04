@@ -1,7 +1,7 @@
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import Anthropic from '@anthropic-ai/sdk';
 import { Models } from './types';
-// import OpenAI from 'openai';
+import OpenAI from 'openai';
 
 export interface AIModel {
   generateContent(prompts: string[]): Promise<string>;
@@ -39,23 +39,22 @@ export class ClaudeAISonnet implements AIModel {
   }
 }
 
-//TODO: uncomment this code when I get an OpenAI API key
-// export class OpenAI4O implements AIModel {
-//   private model: OpenAI;
+export class OpenAI4O implements AIModel {
+  private model: OpenAI;
 
-//   constructor() {
-//     this.model = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
-//   }
+  constructor() {
+    this.model = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+  }
 
-//   async generateContent(prompts: string[]): Promise<string> {
-//     const completion = await this.model.chat.completions.create({
-//       messages: [{ role: 'user', content: prompts[0] }],
-//       model: 'gpt-4o-mini',
-//     });
+  async generateContent(prompts: string[]): Promise<string> {
+    const completion = await this.model.chat.completions.create({
+      messages: [{ role: 'user', content: prompts[0] }],
+      model: 'gpt-4o-mini',
+    });
 
-//     return completion.choices[0].message.content || '';
-//   }
-// }
+    return completion.choices[0].message.content || '';
+  }
+}
 
 export function getAIModel(type: Models = Models.GEMINI) {
   // return type === Models.GEMINI ? new GoogleGeminiAi() : new ClaudeAISonnet();
@@ -64,8 +63,8 @@ export function getAIModel(type: Models = Models.GEMINI) {
       return new GoogleGeminiAi();
     case Models.CLAUDE:
       return new ClaudeAISonnet();
-    // case Models.OPENAI:
-    //   return new OpenAI4O();
+    case Models.CHATGPT:
+      return new OpenAI4O();
     default:
       throw new Error('Invalid AI Model Type');
   }
