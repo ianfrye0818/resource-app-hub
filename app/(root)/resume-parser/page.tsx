@@ -1,6 +1,8 @@
+import { getCurrentUser } from '@/actions/auth-actions';
 import DropZoneComponent from '@/components/pages-and-sections/DropZoneComponent';
 
-export default function ResumeParserPage() {
+export default async function ResumeParserPage() {
+  const currentUser = await getCurrentUser();
   return (
     <section className='flex h-full flex-col items-center justify-center px-4 md:px-6 py-12 md:py-24'>
       <div className='w-full max-w-md space-y-6'>

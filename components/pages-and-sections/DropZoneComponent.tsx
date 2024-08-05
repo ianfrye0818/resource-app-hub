@@ -13,8 +13,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ModelList } from '@/lib/data';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import useLocalstorageState from '@/hooks/useLocalStroage';
+import FormSelectItem from '../forms/form-select-item';
+import { SelectModelSchema } from '@/lib/zod-schemas';
+import { Form } from '../ui/form';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 const acceptedFileTypes = {
   'application/msword': ['.doc'],

@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ErrorMessages } from './data';
+import { User } from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,3 +38,12 @@ export function capitalizeFirstLetter(str: string) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+export const isObjEmpty = (obj: object) => Object.keys(obj).length === 0;
+export const getUserToken = () => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  if (isObjEmpty(user)) {
+    return null;
+  }
+  return user as User;
+};

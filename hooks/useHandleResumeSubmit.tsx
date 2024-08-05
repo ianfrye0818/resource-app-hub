@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { ErrorMessages } from '@/lib/data';
 import { isError } from '@/lib/errors';
 import { Models } from '@/lib/types';
+import { apiClient } from '@/api/axios';
+import { ApiRoutes } from '@/lib/api-routes';
 
 export default function useHandleResumeSubmit() {
   const [loading, setLoading] = useState(false);
@@ -19,23 +21,19 @@ export default function useHandleResumeSubmit() {
       }
       const formData = new FormData();
       formData.append('file', file);
-      const apiURL = `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/api/resume-parse?type=${type.toLowerCase()}`;
-      const response = await fetch(apiURL, {
-        method: 'POST',
-        body: formData,
-      });
 
-      if (response.status === 400) {
-        throw new Error(ErrorMessages.invalid);
-      }
+      const response = await apiClient.post<Blob>(
+        ApiRoutes.resumeParser.generateFormattedResume(type),
+        formData,
+        {
+          responseType: 'blob',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
-      if (response.status === 429) {
-        throw new Error(ErrorMessages.RateLimit);
-      }
-
-      const blob = await response.blob();
+      const blob = response.data;
 
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -49,7 +47,7 @@ export default function useHandleResumeSubmit() {
       document.body.removeChild(a);
       return url;
     } catch (error) {
-      console.error(error);
+      console.error(['handleResumeUpload'], error);
       setError(isError(error) ? error.message : ErrorMessages.Unknown);
     } finally {
       setLoading(false);
@@ -58,3 +56,19 @@ export default function useHandleResumeSubmit() {
 
   return { loading, error, mutate };
 }
+
+// const apiURL = `${
+//   process.env.NEXT_PUBLIC_BASE_URL
+// }/api/resume-parse?type=${type.toLowerCase()}`;
+// const response = await fetch(apiURL, {
+//   method: 'POST',
+//   body: formData,
+// });
+
+// if (response.status === 400) {
+//   throw new Error(ErrorMessages.invalid);
+// }
+
+// if (response.status === 429) {
+//   throw new Error(ErrorMessages.RateLimit);
+// }

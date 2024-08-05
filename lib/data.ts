@@ -1,38 +1,9 @@
-import { IoScan } from 'react-icons/io5';
 import { FcDocument } from 'react-icons/fc';
 import { MdOutlineCelebration } from 'react-icons/md';
 import { GiVote } from 'react-icons/gi';
 import { IoQrCode } from 'react-icons/io5';
 
 import { AIModelSelect, LinkCardProps, Models } from './types';
-
-export const getPrompt = (cleanedDocument: string) => {
-  return `
-does the document below look like it's a resume, if not - please return only the text 'not a resume';
-otherwise,
-if it is a resume, can you please parse it into a json object with the following format do not include any special characters or formatting:
-    {
-      name: string;
-      summary: string;
-      skills: string[];
-      education: { school: string; degree: string }[];
-      workHistory: {
-        company: string;
-        startDate: string;
-        endDate: string;
-        title: string;
-        duties: string[];
-      }[];
-    }
-
-
-Please clean up any grammatical errors and ensure that the resume and summary sound professional.
-${cleanedDocument}
-`;
-};
-
-export const MAX_REQUESTS_PER_MIN = 10;
-export const MAX_REQUESTS_PER_DAY = 1000;
 
 export const ErrorMessages = {
   DailyRateLimit: 'Daily rate limit exceeded',
@@ -43,6 +14,10 @@ export const ErrorMessages = {
   invalid: 'Invalid Resume or Filetype',
   NoFile: 'No file provided',
   InvalidModel: 'Invalid AI Model Type',
+  Unathorized: 'You are not authorized to access this resource',
+  RefreshToken: 'No refresh token found or invalid refresh token',
+  UserNotFound: 'No user found',
+  InvalidCredentials: 'Invalid credentials',
 };
 
 export const LinkCardItems: LinkCardProps[] = [

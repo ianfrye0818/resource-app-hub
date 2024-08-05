@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import Header from '@/components/pages-and-sections/header';
+import { AuthProvider } from '@/contexts/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <main className='h-dvh'>
           <Header />
-          <div className='w-full h-[calc(100dvh-96px)]'>{children}</div>
+          <div className='w-full h-[calc(100dvh-96px)]'>
+            <AuthProvider>{children}</AuthProvider>
+          </div>
         </main>
       </body>
       <Analytics />
