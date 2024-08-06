@@ -1,6 +1,7 @@
 'use client';
-import { refreshTokens } from '@/actions/auth-actions';
-import { Role, User } from '@/lib/types';
+import clientAxios from '@/api/clientAxios';
+import { BASE_URL } from '@/lib/constants';
+import { AuthTokens, Role, User } from '@/lib/types';
 import { getUserToken } from '@/lib/utils';
 import React, { createContext, useReducer, ReactNode, useEffect } from 'react';
 
@@ -106,7 +107,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         dispatch({ type: ActionType.LOGIN_REQUEST });
         const storedUser = getUserToken();
         if (storedUser) {
-          await refreshTokens();
+          const { data } = await clientAxios.post<AuthTokens>(BASE_URL + '/api/auth/refresh');
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
           dispatch({ type: ActionType.LOGIN_SUCCESS, payload: { user: storedUser } });
           return;
         }

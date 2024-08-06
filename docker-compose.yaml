@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  frontend:
+    container_name: resource-apps-frontend
+    image: ianfrye/resource-apps-frontend
+    env_file:
+      - .env
+    networks:
+      - resource_apps_default
+    ports:
+      - 8990:3000
+    volumes:
+      - /docker/appdata/resource-app-hub/frontend:/app
+    restart: unless-stopped
+
+networks:
+  resource_apps_default:
+    external: true

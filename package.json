@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:deploy-prod": "docker-compose up -d",
+    "docker:deploy-staging": "docker-compose -f docker-compose.staging.yml up -d",
+    "docker:build-prod": "docker buildx build --push -t ianfrye/resource-apps-frontend:latest .",
+    "docker:push-prod": "docker push ianfrye/resource-apps-frontend:latest",
+    "docker:build-staging": "docker buildx build --push -t ianfrye/resource-apps-frontend:staging .",
+    "docker:push-staging": "docker push ianfrye/resource-apps-frontend:staging"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.25.0",

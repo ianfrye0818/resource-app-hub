@@ -56,3 +56,11 @@ export enum PermissionList {
   GENERATE_RESUME,
   GENERATE_QR_CODE,
 }
+
+export type QRCode = {
+  id: string;
+  userId: string;
+  qrCode: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

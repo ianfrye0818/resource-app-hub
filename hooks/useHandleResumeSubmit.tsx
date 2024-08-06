@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { ErrorMessages } from '@/lib/data';
 import { isError } from '@/lib/errors';
 import { Models } from '@/lib/types';
-import { apiClient } from '@/api/axios';
 import { ApiRoutes } from '@/lib/api-routes';
+import clientAxios from '@/api/clientAxios';
 
 export default function useHandleResumeSubmit() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export default function useHandleResumeSubmit() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await apiClient.post<Blob>(
+      const response = await clientAxios.post<Blob>(
         ApiRoutes.resumeParser.generateFormattedResume(type),
         formData,
         {

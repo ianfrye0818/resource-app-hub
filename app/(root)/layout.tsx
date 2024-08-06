@@ -1,5 +1,4 @@
 import { getCurrentUser } from '@/actions/auth-actions';
-import { AuthProvider } from '@/contexts/AuthProvider';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
@@ -12,5 +11,5 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   if (!user) {
     throw redirect('/sign-in');
   }
-  return <section>{children}</section>;
+  return <section className='h-full w-full container mx-auto'>{children}</section>;
 }
