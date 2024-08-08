@@ -8,9 +8,6 @@ import { AuthTokens, User } from '@/lib/types';
 import { SignInFormValues } from '@/lib/zod-schemas';
 import { cookies } from 'next/headers';
 
-const cookieStore = cookies();
-const serverAxios = createServerAxios(cookieStore);
-
 export async function getCurrentUser() {
   const user = cookies().get('user')?.value;
   if (!user) return null;
@@ -18,6 +15,8 @@ export async function getCurrentUser() {
 }
 
 export async function login(payload: SignInFormValues) {
+  const cookieStore = cookies();
+  const serverAxios = createServerAxios(cookieStore);
   try {
     const { data } = await serverAxios.post<User & AuthTokens>(
       BASE_API_URL + ApiRoutes.auth.login,

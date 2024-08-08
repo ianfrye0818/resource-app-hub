@@ -6,8 +6,22 @@ import { Form } from '../ui/form';
 import { FormInputItem } from './form-input-item';
 import { Button } from '../ui/button';
 import useSubmitSignInForm from '@/hooks/forms/useSubmitSignInForm';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import DataLoader from '../ui/data-loader';
 
-export default function SignInForm() {
+export default function SignInComponent() {
+  return (
+    <Suspense fallback={<DataLoader />}>
+      <SignInForm />
+    </Suspense>
+  );
+}
+
+function SignInForm() {
+  const searchParams = useSearchParams();
+  const redirectURL = searchParams.get('redirect') || '/';
+
   const form = useForm<SignInFormValues>({
     defaultValues: {
       email: '',
@@ -16,7 +30,7 @@ export default function SignInForm() {
     resolver: zodResolver(SignInFormSchema),
   });
 
-  const onSubmit = useSubmitSignInForm({ form });
+  const onSubmit = useSubmitSignInForm({ form, redirectURL });
   const globalError = form.formState.errors.root;
 
   return (

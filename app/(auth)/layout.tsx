@@ -6,9 +6,9 @@ interface AuthLayoutProps {
 }
 
 export default async function AuthLayout({ children }: AuthLayoutProps) {
-  const user = await getCurrentUser();
-  if (user) {
-    throw redirect('/');
-  }
+  // const user = await getCurrentUser();
+  // if (user) {
+  //   throw redirect('/');
+  // }
   return <section className='h-full w-full flex justify-center items-center'>{children}</section>;
 }
