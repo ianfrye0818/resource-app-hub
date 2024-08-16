@@ -3,7 +3,10 @@ import type { NextRequest } from 'next/server';
 import { getCurrentUser } from './actions/auth-actions';
 
 export async function middleware(request: NextRequest) {
-  const isAuthenticated = (await getCurrentUser()) !== null;
+  const user = await getCurrentUser();
+  const isAuthenticated = !!user;
+
+  console.log({ user });
 
   if (!isAuthenticated) {
     const url = request.nextUrl.clone();

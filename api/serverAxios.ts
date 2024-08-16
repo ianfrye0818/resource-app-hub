@@ -3,9 +3,9 @@ import { AuthTokens } from '@/lib/types';
 import axios from 'axios';
 import { cookies } from 'next/headers';
 
-export const createServerAxios = (cookieStore: ReturnType<typeof cookies>) => {
+export const createServerAxios = (cookieStore?: ReturnType<typeof cookies>) => {
   const serverAxios = axios.create({
-    baseURL: process.env.BACKEND_URL,
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
   });
 
   serverAxios.interceptors.request.use((config) => {

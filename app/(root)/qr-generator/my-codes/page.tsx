@@ -1,8 +1,8 @@
-import { ApiRoutes } from '@/lib/api-routes';
+import { ApiRoutes } from '@/api/api-routes';
 import { BASE_API_URL } from '@/lib/constants';
 import Link from 'next/link';
 import React from 'react';
-import { QRCode as Code } from '@/lib/types';
+import { QRCode as Code } from '@/lib/types/qr-code.types';
 import QRCode from 'react-qr-code';
 import { Button } from '@/components/ui/button';
 import { createServerAxios } from '@/api/serverAxios';
@@ -24,8 +24,6 @@ const fetchCodes = async () => {
 
 export default async function MyQRCodesPage() {
   const qrCodes = await fetchCodes();
-
-  console.log({ qrCodes });
 
   if (!qrCodes || qrCodes.length === 0) {
     return <div>No QR Codes found</div>;

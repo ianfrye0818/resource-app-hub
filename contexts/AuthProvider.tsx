@@ -1,7 +1,7 @@
 'use client';
 import clientAxios from '@/api/clientAxios';
 import { BASE_URL } from '@/lib/constants';
-import { AuthTokens, Role, User } from '@/lib/types';
+import { AuthTokens, RoleList, User } from '@/lib/types';
 import { getUserToken } from '@/lib/utils';
 import React, { createContext, useReducer, ReactNode, useEffect } from 'react';
 
@@ -77,8 +77,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         ...state,
         user: action.payload.user,
         isAuthenticated: true,
-        isAdmin:
-          action.payload.user.role === Role.ADMIN || action.payload.user.role === Role.SUPER_ADMIN,
+        isAdmin: action.payload.user.roles.includes(RoleList.ADMIN),
         loading: false,
       };
     case ActionType.LOGIN_FAILURE:

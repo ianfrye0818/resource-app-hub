@@ -20,6 +20,7 @@ export default function LogoutButton({
       size='sm'
       onClick={async () => {
         await logout();
+        localStorage.clear();
         router.replace('/sign-in');
       }}
     >

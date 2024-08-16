@@ -1,5 +1,5 @@
 'use client';
-import { SignInFormSchema, SignInFormValues } from '@/lib/zod-schemas';
+import { SignInFormSchema } from '@/lib/zod-schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form } from '../ui/form';
@@ -9,6 +9,7 @@ import useSubmitSignInForm from '@/hooks/forms/useSubmitSignInForm';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import DataLoader from '../ui/data-loader';
+import { SignInFormValues } from '@/lib/types/zod-schema.types';
 
 export default function SignInComponent() {
   return (

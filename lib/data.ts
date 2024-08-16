@@ -3,7 +3,8 @@ import { MdOutlineCelebration } from 'react-icons/md';
 import { GiVote } from 'react-icons/gi';
 import { IoQrCode } from 'react-icons/io5';
 
-import { AIModelSelect, LinkCardProps, Models } from './types';
+import { AIModelSelect, Models } from './types/AI.types';
+import { LinkCardProps } from './types';
 
 export const ErrorMessages = {
   DailyRateLimit: 'Daily rate limit exceeded',

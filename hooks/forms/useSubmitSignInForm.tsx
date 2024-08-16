@@ -1,11 +1,12 @@
 'use client';
-import { SignInFormValues } from '@/lib/zod-schemas';
 import { useRouter } from 'next/navigation';
 import { UseFormReturn } from 'react-hook-form';
 import { useAuth } from '../useAuth';
 import { login } from '@/actions/auth-actions';
 import { ActionType } from '@/contexts/AuthProvider';
-import { isCustomError, isError } from '@/lib/errors';
+import { CustomError } from '@/lib/CustomError';
+import { APIError } from '@/lib/CustomAxiosError';
+import { SignInFormValues } from '@/lib/types/zod-schema.types';
 
 export default function useSubmitSignInForm({
   form,
@@ -34,7 +35,10 @@ export default function useSubmitSignInForm({
       console.error(['signInFormError'], error);
       dispatch({ type: ActionType.LOGIN_FAILURE });
       form.setError('root', {
-        message: isCustomError(error) || isError(error) ? error.message : 'Error signing in',
+        message:
+          CustomError.isCustomError(error) || APIError.isAPIError(error)
+            ? error.message
+            : 'Error signing in',
       });
     }
   }

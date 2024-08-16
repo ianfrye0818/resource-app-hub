@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ErrorMessages } from './data';
 import { User } from './types';
+import { CustomError } from './CustomError';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,7 +16,7 @@ export function checkIfValidresume(parsedJson: any) {
     !parsedJson.education ||
     !parsedJson.workHistory
   ) {
-    throw new Error(ErrorMessages.NotResume);
+    throw CustomError.create(ErrorMessages.NotResume);
   }
 }
 
@@ -47,3 +48,5 @@ export const getUserToken = () => {
   }
   return user as User;
 };
+
+export const isError = (error: any): error is Error => error instanceof Error;

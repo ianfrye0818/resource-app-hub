@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { ErrorMessages } from '@/lib/data';
-import { isError } from '@/lib/errors';
-import { Models } from '@/lib/types';
-import { ApiRoutes } from '@/lib/api-routes';
+import { Models } from '@/lib/types/AI.types';
+import { ApiRoutes } from '@/api/api-routes';
 import clientAxios from '@/api/clientAxios';
+import { CustomError } from '@/lib/CustomError';
 
 export default function useHandleResumeSubmit() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function useHandleResumeSubmit() {
 
     try {
       if (!file) {
-        throw new Error(ErrorMessages.NoFile);
+        throw CustomError.create(ErrorMessages.NoFile);
       }
       const formData = new FormData();
       formData.append('file', file);
@@ -48,7 +48,7 @@ export default function useHandleResumeSubmit() {
       return url;
     } catch (error) {
       console.error(['handleResumeUpload'], error);
-      setError(isError(error) ? error.message : ErrorMessages.Unknown);
+      setError(CustomError.isCustomError(error) ? error.message : ErrorMessages.Unknown);
     } finally {
       setLoading(false);
     }
@@ -56,19 +56,3 @@ export default function useHandleResumeSubmit() {
 
   return { loading, error, mutate };
 }
-
-// const apiURL = `${
-//   process.env.NEXT_PUBLIC_BASE_URL
-// }/api/resume-parse?type=${type.toLowerCase()}`;
-// const response = await fetch(apiURL, {
-//   method: 'POST',
-//   body: formData,
-// });
-
-// if (response.status === 400) {
-//   throw new Error(ErrorMessages.invalid);
-// }
-
-// if (response.status === 429) {
-//   throw new Error(ErrorMessages.RateLimit);
-// }

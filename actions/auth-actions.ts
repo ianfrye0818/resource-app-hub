@@ -1,12 +1,12 @@
 'use server';
-
 import { createServerAxios } from '@/api/serverAxios';
-import { ApiRoutes } from '@/lib/api-routes';
+import { ApiRoutes } from '@/api/api-routes';
 import { BASE_API_URL } from '@/lib/constants';
 import { ErrorMessages } from '@/lib/data';
 import { AuthTokens, User } from '@/lib/types';
-import { SignInFormValues } from '@/lib/zod-schemas';
 import { cookies } from 'next/headers';
+import { CustomError } from '@/lib/CustomError';
+import { SignInFormValues } from '@/lib/types/zod-schema.types';
 
 export async function getCurrentUser() {
   const user = cookies().get('user')?.value;
@@ -22,55 +22,30 @@ export async function login(payload: SignInFormValues) {
       BASE_API_URL + ApiRoutes.auth.login,
       payload
     );
-
-    // const response = await fetch(BASE_API_URL + ApiRoutes.auth.login, {
-    //   method: 'POST',
-    //   body: JSON.stringify(payload),
-    //   headers: { 'Content-Type': 'application/json' },
-    // });
-
-    // if (!response.ok) {
-    //   if (response.status === 401) {
-    //     throw new Error(ErrorMessages.InvalidCredentials);
-    //   }
-    //   throw new Error(ErrorMessages.Unknown);
-    // }
-
     const { accessToken, refreshToken, ...rest } = data;
+    if (data.firstName) {
+      await flipFirstTime(data.userId);
+    }
     cookies().set('accessToken', accessToken);
     cookies().set('refreshToken', refreshToken);
     cookies().set('user', JSON.stringify(rest));
+
     return data;
   } catch (error) {
     console.error(['login'], error);
-    throw error;
+    throw CustomError.create((error as any) || ErrorMessages.Unknown);
   }
 }
 
-// export async function refreshTokens() {
-//   try {
-//     const refreshToken = cookies().get('refreshToken')?.value;
-//     if (!refreshToken) {
-//       throw new Error(ErrorMessages.RefreshToken);
-//     }
-
-//     const resp = await fetch(BASE_API_URL + ApiRoutes.auth.refreshToken, {
-//       method: 'POST',
-//       headers: { Authorization: `Bearer ${refreshToken}` },
-//     });
-
-//     if (!resp.ok) {
-//       throw new Error(ErrorMessages.RefreshToken);
-//     }
-//     const data = (await resp.json()) as AuthTokens;
-
-//     cookies().set('accessToken', data.accessToken);
-//     cookies().set('refreshToken', data.refreshToken);
-//   } catch (error) {
-//     console.error(['refreshTokens'], error);
-//     throw error;
-//   }
-// }
+export async function flipFirstTime(userId: string) {
+  try {
+    const serverAxios = createServerAxios(cookies());
+    await serverAxios.patch(ApiRoutes.user.flipFirstLogin(userId));
+  } catch (error) {
+    console.error(['flipFirstTime'], error);
+    throw error;
+  }
+}
 
 export async function logout() {
   try {
@@ -79,6 +54,6 @@ export async function logout() {
     cookies().delete('user');
   } catch (error) {
     console.error(['logout'], error);
-    throw error;
+    throw CustomError.create((error as any) || ErrorMessages.Unknown);
   }
 }

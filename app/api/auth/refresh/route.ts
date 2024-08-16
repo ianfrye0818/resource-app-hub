@@ -3,10 +3,9 @@ import axios from 'axios';
 import { AuthTokens } from '@/lib/types';
 import { cookies } from 'next/headers';
 import { BASE_API_URL } from '@/lib/constants';
-import { ApiRoutes } from '@/lib/api-routes';
+import { ApiRoutes } from '@/api/api-routes';
 
 export async function POST(request: NextRequest) {
-  console.log('refreshing token');
   try {
     const refreshToken =
       cookies().get('refreshToken')?.value ||
@@ -20,7 +19,7 @@ export async function POST(request: NextRequest) {
 
     const { accessToken, refreshToken: newRefreshToken } = data;
 
-    const res = NextResponse.json({ accessToken });
+    const res = NextResponse.json({ accessToken, refreshToken: newRefreshToken });
     cookies().set('accessToken', accessToken, { httpOnly: true, path: '/', maxAge: 3600 });
     cookies().set('refreshToken', newRefreshToken, {
       httpOnly: true,

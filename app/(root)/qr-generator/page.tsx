@@ -2,7 +2,7 @@
 import clientAxios from '@/api/clientAxios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ApiRoutes } from '@/lib/api-routes';
+import { ApiRoutes } from '@/api/api-routes';
 import Link from 'next/link';
 
 import { useRouter } from 'next/navigation';
