@@ -7,8 +7,13 @@ import { DatePickerFormItem } from './form-date-picker-item';
 import { Form } from '../ui/form';
 import { Button } from '../ui/button';
 import { FormInputItem } from './form-input-item';
+import { addEcolabEmployee } from '@/actions/ecolab-employee.actions';
+import { useRouter } from 'next/navigation';
+import { useToast } from '../ui/use-toast';
 
 export default function AddEcolabEmployeeForm() {
+  const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<CreateEcolabEmployeeSchemaValues>({
     defaultValues: {
       birthDate: new Date(),
@@ -19,11 +24,22 @@ export default function AddEcolabEmployeeForm() {
     resolver: zodResolver(CreateEcolabEmployeeSchema),
   });
 
-  const saveToDbAndReset = async () => {
-    console.log('reset');
-  };
-  const saveToDbAndNavigate = async () => {
-    console.log('navigate');
+  const onSubmit = async (values: any, type: 'reset' | 'navigate') => {
+    try {
+      const newEmployee = await addEcolabEmployee(values);
+      if (type === 'reset') {
+        form.reset();
+      } else {
+        router.push('/ecolab/beeline-employees');
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'Error adding employee',
+        description: 'An error occurred while adding the employee',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -54,15 +70,16 @@ export default function AddEcolabEmployeeForm() {
           <div className='flex items-center gap-2'>
             <Button
               type='button'
-              onClick={form.handleSubmit(saveToDbAndNavigate)}
+              onClick={form.handleSubmit((values) => onSubmit(values, 'navigate'))}
               className='flex-1 bg-blue-600 hover:bg-blue-600 hover:opacity-80'
             >
               Save and Return
             </Button>
             <Button
-              onClick={form.handleSubmit(saveToDbAndReset)}
+              variant={'outline'}
+              onClick={form.handleSubmit((values) => onSubmit(values, 'reset'))}
               type='button'
-              className='flex-1 bg-blue-600 hover:bg-blue-600 hover:opacity-80'
+              className='flex-1'
             >
               Save and Add Another
             </Button>

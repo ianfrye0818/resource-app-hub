@@ -5,6 +5,7 @@ import { IoQrCode } from 'react-icons/io5';
 
 import { AIModelSelect, Models } from './types/AI.types';
 import { LinkCardProps } from './types';
+import { User2Icon } from 'lucide-react';
 
 export const ErrorMessages = {
   DailyRateLimit: 'Daily rate limit exceeded',
@@ -50,6 +51,13 @@ export const LinkCardItems: LinkCardProps[] = [
     href: 'https://www.pulse-vote.com',
     newWindow: true,
     iconColor: '#0066ff',
+  },
+  {
+    title: 'Ecolab Employee Manager',
+    linkIcon: User2Icon,
+    description: 'App for managing Ecolab Employees',
+    href: '/ecolab/beeline-employees',
+    iconColor: '#ffbb66bb',
   },
 ];
 

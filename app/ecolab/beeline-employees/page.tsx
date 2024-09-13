@@ -11,6 +11,7 @@ import { isError } from '@/lib/utils';
 import { ErrorMessages } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import EcolabEmployeeListProvider from '@/contexts/EcolabEmployeeListContext';
 
 const fetchBeelineEmployees = async () => {
   try {
@@ -45,7 +46,34 @@ export default async function EcolabBeeLine() {
   }
 
   if (!employees || employees.length === 0) {
-    return <div className='container'>No employees found</div>;
+    return (
+      <div className='container mx-auto flex flex-col gap-4'>
+        <AddEmployeeLink />
+        No employees found
+      </div>
+    );
   }
-  return <div className='container'>EcolabBeeLine</div>;
+  return (
+    <div className='container mx-auto flex flex-col'>
+      <AddEmployeeLink />
+      <EcolabEmployeeListProvider defaultEmployees={employees}>
+        <div>
+          {employees.map((employee) => (
+            <div key={employee.bullhornId}>{employee.firstName}</div>
+          ))}
+        </div>
+      </EcolabEmployeeListProvider>
+    </div>
+  );
+}
+
+function AddEmployeeLink() {
+  return (
+    <Button
+      className='ml-auto'
+      asChild
+    >
+      <Link href='/ecolab/beeline-employees/add-employee'>Add Employee</Link>
+    </Button>
+  );
 }
