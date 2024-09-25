@@ -86,8 +86,14 @@ export const ModelList: AIModelSelect[] = [
     label: 'ChatGPT',
     value: Models.CHATGPT,
   },
-  {
-    label: 'Claude',
-    value: Models.CLAUDE,
-  },
+  // {
+  //   label: 'Claude',
+  //   value: Models.CLAUDE,
+  // },
 ];
+
+export const acceptedFileTypes = {
+  'application/msword': ['.doc'],
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+  'application/pdf': ['.pdf'],
+};

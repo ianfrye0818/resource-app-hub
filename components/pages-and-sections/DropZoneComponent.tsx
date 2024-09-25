@@ -12,15 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ModelList } from '@/lib/data';
-
+import { acceptedFileTypes, ModelList } from '@/lib/data';
 import useLocalstorageState from '@/hooks/useLocalStroage';
-
-const acceptedFileTypes = {
-  'application/msword': ['.doc'],
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-  'application/pdf': ['.pdf'],
-};
 
 export default function DropZoneComponent() {
   const { error, loading, mutate: uploadResume } = useHandleResumeSubmit();
@@ -58,7 +51,7 @@ export default function DropZoneComponent() {
             </div>
             <Card
               {...getRootProps()}
-              className='border-2 min-h-[300px] border-dashed border-black p-8 flex flex-col items-center justify-center space-y-4'
+              className='border-2 min-h-[300px] border-dashed border-black p-8 flex flex-col items-center justify-center space-y-4 cursor-pointer'
             >
               <div>
                 <div className='flex flex-col items-center justify-center space-y-2'>

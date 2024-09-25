@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
   if (!file) {
     return NextResponse.json({ error: ErrorMessages.NoFile }, { status: 400 });
   }
+
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = file.name.replaceAll(' ', '_');

@@ -20,9 +20,7 @@ export default function ResumeParserPage() {
         {/* Drop Zone Component */}
         <DropZoneComponent />
         <div className='grid gap-2'>
-          <p className='text-center text-muted-foreground'>
-            Accepted file types: .docx, .doc, .pdf
-          </p>
+          <p className='text-center text-muted-foreground'>Accepted file types: .docx, .pdf</p>
         </div>
       </div>
     </section>
