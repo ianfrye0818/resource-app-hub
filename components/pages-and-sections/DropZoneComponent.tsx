@@ -24,7 +24,9 @@ const acceptedFileTypes = {
 
 export default function DropZoneComponent() {
   const { error, loading, mutate: uploadResume } = useHandleResumeSubmit();
-  const [type, setType] = useLocalstorageState<Models>('model', Models.GEMINI);
+  const [type, setType] = useLocalstorageState<Models>('model', Models.CHATGPT);
+
+  const frontend = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleChange = async (acceptedFile: File) => {
     try {

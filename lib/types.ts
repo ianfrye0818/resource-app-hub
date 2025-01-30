@@ -10,8 +10,8 @@ export interface LinkCardProps {
 }
 
 export enum Models {
-  GEMINI = 'gemini',
-  CLAUDE = 'claude',
+  // GEMINI = 'gemini',
+  // CLAUDE = 'claude',
   CHATGPT = 'chatgpt',
 }
 

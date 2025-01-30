@@ -78,16 +78,16 @@ export const LinkCardItems: LinkCardProps[] = [
 ];
 
 export const ModelList: AIModelSelect[] = [
-  {
-    label: 'Gemini',
-    value: Models.GEMINI,
-  },
+  // {
+  //   label: 'Gemini',
+  //   value: Models.GEMINI,
+  // },
   {
     label: 'ChatGPT',
     value: Models.CHATGPT,
   },
-  {
-    label: 'Claude',
-    value: Models.CLAUDE,
-  },
+  // {
+  //   label: 'Claude',
+  //   value: Models.CLAUDE,
+  // },
 ];

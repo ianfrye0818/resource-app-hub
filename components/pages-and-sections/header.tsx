@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import logo from '@/public/resource.jpeg';
 import Link from 'next/link';
 const Header = () => {
   return (
@@ -7,7 +6,7 @@ const Header = () => {
       <div className='flex items-center justify-center'>
         <Link href='/'>
           <Image
-            src={logo}
+            src={'/images/resource.jpeg'}
             alt='The Resource'
             width={80}
             height={80}
