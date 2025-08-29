@@ -1,7 +1,4 @@
-import { IoScan } from 'react-icons/io5';
 import { FcDocument } from 'react-icons/fc';
-import { MdOutlineCelebration } from 'react-icons/md';
-import { GiVote } from 'react-icons/gi';
 import { IoQrCode } from 'react-icons/io5';
 
 import { AIModelSelect, LinkCardProps, Models } from './types';
@@ -59,35 +56,11 @@ export const LinkCardItems: LinkCardProps[] = [
     description: 'App for generating QR codes',
     href: '/qr-generator',
   },
-  {
-    title: 'Praise Pal',
-    linkIcon: MdOutlineCelebration,
-    description: 'App for sharing kudos with co-workers',
-    href: 'https://www.praise-pal.com',
-    newWindow: true,
-    iconColor: '#ff9900',
-  },
-  {
-    title: 'Pulse Vote',
-    linkIcon: GiVote,
-    description: 'App for real-time voting',
-    href: 'https://www.pulse-vote.com',
-    newWindow: true,
-    iconColor: '#0066ff',
-  },
 ];
 
 export const ModelList: AIModelSelect[] = [
-  // {
-  //   label: 'Gemini',
-  //   value: Models.GEMINI,
-  // },
   {
     label: 'ChatGPT',
     value: Models.CHATGPT,
   },
-  // {
-  //   label: 'Claude',
-  //   value: Models.CLAUDE,
-  // },
 ];
